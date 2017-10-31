@@ -83,14 +83,18 @@
             this.map.addTilesetImage('pacman-tiles', 'tiles');
 
             this.layer = this.map.createLayer('Pacman');
-
-            this.dots = this.add.physicsGroup();
+	    
+	    this.diamonds = this.add.physicsGroup();
+            this.bonus = this.add.physicsGroup();
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
-            this.dots.setAll('x', 6, false, false, 1);
-            this.dots.setAll('y', 6, false, false, 1);
+            this.diamonds.setAll('x', 6, false, false, 1);
+            this.diamonds.setAll('y', 6, false, false, 1);
+		
+	    this.bonus.setAll('x', 6, false, false, 1);
+            this.bonus.setAll('y', 6, false, false, 1);
 
             //  Pacman should collide with everything except the safe tile
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
@@ -224,15 +228,25 @@
 
         },
 
-        eatDot: function (pacman, dot) {
+        eatDiamond: function (pacman, diamond) {
 
-            dot.kill();
+            diamond.kill();
 
-            if (this.dots.total === 0)
+            if (this.diamonds.total === 0)
             {
-                this.dots.callAll('revive');
+                this.diamonds.callAll('revive');
             }
 
+        },
+	    eatBonus: function (pacman, bonus) {
+            bonus.kill();
+	    this.bonus += 10;
+            this.textBonus.text = 'Bonus:' + this.bonus;
+       
+            if (this.bonus.total === 0)
+            {
+                this.bonus.callAll('revive');
+            }
         },
 
         update: function () {
