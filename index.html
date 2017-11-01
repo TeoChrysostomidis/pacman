@@ -199,6 +199,7 @@
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.diamond, this.eatDiamond, null, this);
 	    this.physics.arcade.overlap(this.pacman, this.bonus, this.eatBonus, null, this);
+		
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
             //  Update our grid sensors
@@ -206,7 +207,9 @@
             this.directions[2] = this.map.getTileRight(this.layer.index, this.marker.x, this.marker.y);
             this.directions[3] = this.map.getTileAbove(this.layer.index, this.marker.x, this.marker.y);
             this.directions[4] = this.map.getTileBelow(this.layer.index, this.marker.x, this.marker.y);
+		
             this.checkKeys();
+		
             if (this.turning !== Phaser.NONE)
             {
                 this.turn();
