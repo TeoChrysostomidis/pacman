@@ -20,7 +20,7 @@
         {
          "columns":64,
          "firstgid":1,
-         "image":"pacman-develop\/assets\/pacman-tiles.png",
+         "image":..\/pacman-tiles.png",
          "imageheight":1024,
          "imagewidth":1024,
          "margin":0,
