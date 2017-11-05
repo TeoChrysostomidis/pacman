@@ -41,8 +41,8 @@
         this.current = Phaser.NONE;
         this.turning = Phaser.NONE;
 	
-	this.bonus = 2;
-	this.textBonus= '';
+	//this.bonus = 2;
+	//this.textBonus= '';
     };
 	    
     Pacman.prototype = {
@@ -61,8 +61,8 @@
 		
             //  We need this because the assets are on github pages
             //  Remove the next 2 lines if running locally
-            //this.load.baseURL = 'https://teochrysostomidis.github.io/pacman/';
-           // this.load.crossOrigin = 'anonymous';
+            this.load.baseURL = 'https://teochrysostomidis.github.io/pacman/';
+            this.load.crossOrigin = 'anonymous';
 		
             this.load.image('dot', 'assets/diamond.png');
             this.load.image('bonus', 'assets/Dragonball.png');
