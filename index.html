@@ -28,10 +28,13 @@
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
 	    
     var lives = 3;
-    var livestxt = '';
+    var livesText = '';
+	    
     var time = 0;
+    var timeText;  
+	    
     var score=0;
-    var scoretxt;
+    var scoreText;
 	    
     var Pacman = function (game) {
         this.map = null;
@@ -53,11 +56,6 @@
         this.current = Phaser.NONE;
         this.turning = Phaser.NONE;
 	
-	this.score = 0;
-	this.scoreText = '';
-	 
-	this.super = 0;
-	this.superText = '';
     };
 	    
     Pacman.prototype = {
@@ -127,8 +125,8 @@
             this.move(Phaser.LEFT);
 		
 	    this.scoreText = game.add.text(0, 500, 'Points: 0', { fontSize: '20px Verdana', fill: 'white' });
-		
-	    this.superText = game.add.text(300, 500, 'Boost: 0', { fontSize: '20px Verdana', fill: 'white' });
+	    this.timeText = game.add.text(300, 500, 'Time: 0', { fontSize: '20px Verdana', fill: 'white' });
+	    this.livesText = game.add.text(600, 500, 'Lives: 0', { fontSize: '20px Verdana', fill: 'white' });
         },
 	    
         checkKeys: function () {
@@ -236,8 +234,8 @@
         eatDot: function (pacman, dot) {
             dot.kill();
 		
-	    this.score += 1;
-	    this.scoreText.text = 'Score:' + this.points;
+	    score += 1;
+	    scoreText.text = 'Score:' + score;
 		
 	    var audio = new Audio('assets/counting coins.mp3');
             audio.play()
@@ -251,8 +249,8 @@
 	 eatBonus: function (pacman, bonus) {
             bonus.kill();
 		 
-	    this.super += 5;
-            this.superText.text = 'Bonus:' + this.super;
+	    score += 10;
+            scoreText.text = 'Score' + score;
        
             if (this.bonus.total === 0)
             {
