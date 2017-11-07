@@ -97,10 +97,10 @@
             this.dots.setAll('x', 0, false, false, 1);
             this.dots.setAll('y', 0, false, false, 1);
 		
-	    //this.map.createFromTiles(2, this.safetile, 'bonus', this.layer, this.Dragonballs);
+	    this.map.createFromTiles(2, this.safetile, 'bonus', this.layer, this.Dragonballs);
 		
-	    //this.bonus.setAll('x', 6, false, false, 1);
-            //this.bonus.setAll('y', 6, false, false, 1);
+	    this.bonus.setAll('x', 6, false, false, 1);
+            this.bonus.setAll('y', 6, false, false, 1);
 		
             //  Pacman should collide with everything except the safe tile
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
@@ -223,22 +223,27 @@
 	    
         eatDot: function (pacman, dot) {
             dot.kill();
+	    
+	    var audio = new Audio('assets/counting coins.mp3');
+            audio.play()
+		
             if (this.dots.total === 0)
             {
                 this.dots.callAll('revive');
             }
         },
 	    
-	    //eatBonus: function (pacman, bonus) {
-            //bonus.kill();
-	    //this.bonus += 10;
-           // this.textBonus.text = 'Bonus:' + this.bonus;
+	 eatBonus: function (pacman, bonus) {
+            bonus.kill();
+		 
+	    this.bonus += 5;
+            this.bonusText.text = 'Bonus:' + this.bonus;
        
-           // if (this.bonus.total === 0)
-          //  {
-         //       this.bonus.callAll('revive');
-         //   }
-      //  },
+            if (this.bonus.total === 0)
+            {
+                this.bonus.callAll('revive');
+            }
+        },
 	    
         update: function () {
           
