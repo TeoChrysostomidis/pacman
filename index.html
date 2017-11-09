@@ -33,6 +33,8 @@
     var score=0;
     var scoreText;
 	    
+    var bonusPos;
+	    
     var Pacman = function (game) {
         this.map = null;
         this.layer = null;
@@ -128,6 +130,8 @@
 		
 	    scoreText = game.add.text(0, -5, 'Score: 0', { fontSize: '5px Verdana', fill: 'white' });
 	    livesText = game.add.text(355, -5, 'lives: ' + lives, { fontSize: '5px Verdana', fill: 'white' });
+		
+	    this.eatBonus();
         },
 	    
         checkKeys: function () {
@@ -234,10 +238,7 @@
 	    
         eatDot: function (pacman, dot) {
             dot.kill();
-		
-	    score += 1;
-	    scoreText.text = 'Score:' + score;
-		
+	   
 	    var audio = new Audio('assets/counting coins.mp3');
             audio.play()
 		
@@ -245,18 +246,25 @@
             {
                 this.dots.callAll('revive');
             }
+		
+	    const bonusring = this.dots.getChildIndex(dot) == bonusPos;
+		
+            if (bonusring) {
+                score = score + 100;
+                this.eatBonus();
+            }
+            else {
+                score += 1;
+            }
+             scoreText.text = 'Score:' + score;
+
         },
 	    
-	 eatBonus: function (pacman, bonus) {
-            bonus.kill();
-		 
-	    score += 10;
-            scoreText.text = 'Score' + score;
-       
-            if (this.bonuses.total === 0)
-            {
-                this.bonuses.callAll('revive');
-            }
+        eatBonus: function() {
+            let totalDots = this.dots.children.length;
+            bonusPos = Math.floor(Math.random() * totalDots);
+            this.dots.children[bonusPos].revive();
+            this.dots.children[bonusPos].loadTexture('bonus');
         },
 	    
         update: function () {
