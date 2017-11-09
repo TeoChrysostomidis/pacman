@@ -97,18 +97,11 @@
 	    
 	    this.dots = this.add.physicsGroup();
 		
-            this.bonuses = this.add.physicsGroup();
-		
             this.map.createFromTiles(1, this.safetile, 'dot', this.layer, this.dots);
 		
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 0, false, false, 1);
             this.dots.setAll('y', 0, false, false, 1);
-		
-	    this.map.createFromTiles(2, this.safetile, 'bonus', this.layer, this.bonuses);
-		
-	    this.bonuses.setAll('x', 0, false, false, 1);
-            this.bonuses.setAll('y', 0, false, false, 1);
 		
             //  Pacman should collide with everything except the safe tile
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
@@ -242,7 +235,7 @@
 	    var audio = new Audio('assets/counting coins.mp3');
             audio.play()
 		
-            if (this.dots.total === 0)
+            if (this.dots.total === 1)
             {
                 this.dots.callAll('revive');
             }
