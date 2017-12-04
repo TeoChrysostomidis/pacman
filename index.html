@@ -310,6 +310,29 @@
 			
 		    }
 		}
+		
+	    this.enemy.scale.x = 1;
+		if (this.enemy.angle == 0) {
+		    this.enemy.body.velocity.x = enemyspeed;
+		}
+		if (this.enemy.angle == -180) {
+		    this.enemy.body.velocity.x = -enemyspeed;
+		}
+		if (this.enemy.angle == 90) {
+		    this.enemy.body.velocity.y = enemyspeed;
+		}
+		if (this.enemy.angle == -90) {
+		    this.enemy.body.velocity.y = -enemyspeed;
+		}
+		if (this.physics.arcade.collide(this.enemy, this.layer)) {
+		    randomV = Math.floor((Math.random() * 2) + 1);
+		    if (randomV == 1) {
+			this.enemy.angle = this.enemy.angle + 90;
+		    }
+		    else {
+			this.enemy.angle = this.enemy.angle - 90;
+		    }
+		}
    
 			   
           
