@@ -41,10 +41,12 @@
         this.map = null;
         this.layer = null;
         this.pacman = null;
+	this.enemy = null;
 	    
         this.safetile = 1047;
         this.gridsize = 16;
-	    
+	
+	this.enemyspeed = 90;
         this.speed = 120;
         this.threshold = 3;
 	    
@@ -85,6 +87,7 @@
             this.load.image('bonus', 'assets/Dragonball.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
             this.load.spritesheet('pacman', 'assets/Goku.png', 32, 32);
+	    this.load.spritesheet('enemy', 'assets/magin.png', 32, 32);
             this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
 		
             //  Needless to say, graphics (C)opyright Namco
@@ -121,10 +124,25 @@
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
 		
+	    //Enemy
+	    this.enemy = this.add.sprite((14 * 16) + 8, (17 * 16) + 8, 'enemy', 0);
+	    this.enemy.anchor.set(0.5);
+	    this.physics.arcade.enable(this.enemy);
+	    this.enemy.body.setSize(16, 16, 0, 0);
+		
+	    this.enemy.animations.add('walkRL', [0, 1, 2, 3, 4], 40, true);
+	    this.enemy.animations.add('walkUP', [5, 6, 7, 8, 9], 40, true);
+            this.enemy.animations.add('walkDOWN', [10, 11, 12, 13, 14], 40, true);
+		
+	    this.enemy.play('walkRL')
+
+		
 	    this.timeText = game.add.text(200, 2, "Time: "+Math.floor(this.game.time.totalElapsedSeconds()),{ font: '13px Verdana', fill: "white" });	
 		
 	    scoreText = game.add.text(0, -5, 'Score: 0', { fontSize: '5px Verdana', fill: 'white' });
 	    livesText = game.add.text(355, -5, 'lives: ' + lives, { fontSize: '5px Verdana', fill: 'white' });
+		
+		
 		
 	    this.eatBonus();
         },
@@ -263,10 +281,46 @@
         },
 	    
         update: function () {
+		
+	   if (this.physics.arcade.collide(this.pacman, this.enemy)) {
+		   if (lives > 1) {
+			lives--;
+			livestext.text = "lives: " + lives; 
+			   
+			this.pacman.position.x = (14 * 16) + 8;
+			this.pacman.position.y = (17 * 16) + 8;
+			   
+			this.move(Phaser.LEFT);
+			   
+			this.enemy.position.x = (14 * 16) + 8;
+			this.enemy.position.y = (23 * 16) + 8;
+			
+		    }
+		    else {
+			
+			alert("Defeat!");
+			
+			this.coins.callAll('revive');
+			    
+			this.pacman.position.x = (14 * 16) + 8;
+			this.pacman.position.y = (17 * 16) + 8;
+			    
+			this.move(Phaser.LEFT);
+			    
+			this.enemy.position.x = (14 * 16) + 8;
+			this.enemy.position.y = (23 * 16) + 8;
+			
+		    }
+		}
+   
+			   
           
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
 	    this.physics.arcade.overlap(this.pacman, this.bonuses, this.eatBonus, null, this);
+
+	    this.physics.arcade.collide(this.enemy, this.layer2, this.checkZKeys, null, this);
+	    this.physics.arcade.overlap(this.enemy, this.pacman, this.killPacman, null, this);
 		
 	    this.timeText.text = "Time: "+Math.floor(this.game.time.totalElapsedSeconds());
 		
