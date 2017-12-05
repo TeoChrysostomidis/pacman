@@ -131,9 +131,9 @@
 	    this.physics.arcade.enable(this.enemy);
 	    this.enemy.body.setSize(16, 16, 0, 0);
 		
-	    this.enemy.animations.add('walkRL', [0, 1, 2, 1], 20, true);
+	    this.enemy.animations.add('munch', [0, 1, 2, 1], 20, true);
 		
-	    this.enemy.play('walkRL');
+	    this.enemy.play('munch');
 
 		
 	    this.timeText = game.add.text(200, 2, "Time: "+Math.floor(this.game.time.totalElapsedSeconds()),{ font: '13px Verdana', fill: "white" });	
