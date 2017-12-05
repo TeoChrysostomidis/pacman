@@ -132,7 +132,7 @@
 		
 	    this.enemy.animations.add('walkRL', [0, 1, 2, 1], 20, true);
 		
-	    this.enemy.play('walkRL')
+	    this.enemy.play('walkRL');
 
 		
 	    this.timeText = game.add.text(200, 2, "Time: "+Math.floor(this.game.time.totalElapsedSeconds()),{ font: '13px Verdana', fill: "white" });	
@@ -255,6 +255,7 @@
 		
             if (this.dots.total === 1)
             {
+		alert('Victory!');
                 this.dots.callAll('revive');
             }
 		
