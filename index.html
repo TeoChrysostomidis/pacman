@@ -341,9 +341,6 @@
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
 	    this.physics.arcade.overlap(this.pacman, this.bonuses, this.eatBonus, null, this);
-
-	    this.physics.arcade.collide(this.enemy, this.layer2, this.checkZKeys, null, this);
-	    this.physics.arcade.overlap(this.enemy, this.pacman, this.killPacman, null, this);
 		
 	    this.timeText.text = "Time: "+Math.floor(this.game.time.totalElapsedSeconds());
 		
