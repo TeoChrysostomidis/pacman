@@ -306,7 +306,7 @@
 	    
 	  rightteleport: function() {
 		this.pacman.destroy();
-		this.pacman = this.add.sprite((10 * 16) + 8, (15 * 16) + 8, 'pacman', 0);
+		this.pacman = this.add.sprite((2 * 16) + 8, (2 * 16) + 8, 'pacman', 0);
 		this.pacman.anchor.set(0.5);
 		this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
 		this.physics.arcade.enable(this.pacman);
