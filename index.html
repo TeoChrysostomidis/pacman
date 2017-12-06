@@ -143,8 +143,8 @@
 	    
 	    this.teleport1.setAll('x', 3, false, false, 1);
 	    this.teleport1.setAll('y', 0, false, false, 1);
-	    this.teleport2.setAll('x', 50, false, false, 1);
-	    this.teleport2.setAll('y', 30, false, false, 1);
+	    this.teleport2.setAll('x', 3, false, false, 1);
+	    this.teleport2.setAll('y', 0, false, false, 1);
 
 		
 	    this.timeText = game.add.text(200, 2, "Time: "+Math.floor(this.game.time.totalElapsedSeconds()),{ font: '13px Verdana', fill: "white" });	
@@ -306,7 +306,7 @@
 	    
 	  rightteleport: function() {
 		this.pacman.destroy();
-		this.pacman = this.add.sprite((2 * 16) + 8, (2 * 16) + 8, 'pacman', 0);
+		this.pacman = this.add.sprite((10 * 16) + 8, (15 * 16) + 8, 'pacman', 0);
 		this.pacman.anchor.set(0.5);
 		this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
 		this.physics.arcade.enable(this.pacman);
