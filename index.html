@@ -87,6 +87,7 @@
             this.load.image('dot', 'assets/diamond.png');
             this.load.image('bonus', 'assets/Dragonball.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
+	    this.load.image('teleport', 'assets/teleport.png');
             this.load.spritesheet('pacman', 'assets/Goku.png', 32, 32);
 	    this.load.spritesheet('enemy', 'assets/magin.png', 32, 32);
             this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
@@ -101,9 +102,15 @@
 		
             this.layer = this.map.createLayer('Pacman');
 	    
+	    this.teleport1 = this.add.physicsGroup();
+	    this.teleport2 = this.add.physicsGroup();
+	    
 	    this.dots = this.add.physicsGroup();
 		
             this.map.createFromTiles(1, this.safetile, 'dot', this.layer, this.dots);
+		
+	    this.map.createFromTiles(37, this.safetile, 'teleport', this.layer, this.teleport1);
+	    this.map.createFromTiles(37, this.safetile, 'teleport', this.layer, this.teleport2);
 		
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 0, false, false, 1);
@@ -133,6 +140,11 @@
 		
 		
 	    this.enemy.play('munch');
+	    
+	    this.teleport1.setAll('x', 3, false, false, 1);
+	    this.teleport1.setAll('y', 0, false, false, 1);
+	    this.teleport2.setAll('x', 3, false, false, 1);
+	    this.teleport2.setAll('y', 0, false, false, 1);
 
 		
 	    this.timeText = game.add.text(200, 2, "Time: "+Math.floor(this.game.time.totalElapsedSeconds()),{ font: '13px Verdana', fill: "white" });	
@@ -279,6 +291,30 @@
             this.dots.children[bonusPos].loadTexture('bonus');
         },
 	    
+	    
+	leftteleport: function() {
+		this.pacman.destroy();
+		this.pacman = this.add.sprite((22 * 16) + 8, (26 * 16) + 8, 'pacman', 0);
+		this.pacman.anchor.set(0.5);
+		this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
+		this.physics.arcade.enable(this.pacman);
+		this.pacman.body.setSize(16, 16, 0, 0);
+		this.pacman.play('munch');
+		this.move(Phaser.LEFT);
+	},
+	    
+	    
+	  rightteleport: function() {
+		this.pacman.destroy();
+		this.pacman = this.add.sprite((2 * 16) + 8, (2 * 16) + 8, 'pacman', 0);
+		this.pacman.anchor.set(0.5);
+		this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
+		this.physics.arcade.enable(this.pacman);
+		this.pacman.body.setSize(16, 16, 0, 0);
+		this.pacman.play('munch');
+		this.move(Phaser.RIGHT);
+	},  
+	    
         update: function () {
 		
 	   if (this.physics.arcade.collide(this.pacman, this.enemy)) {
@@ -342,6 +378,9 @@
 	    this.physics.arcade.overlap(this.pacman, this.bonuses, this.eatBonus, null, this);
 		
 	    this.timeText.text = "Time: "+Math.floor(this.game.time.totalElapsedSeconds());
+		
+	    this.physics.arcade.overlap(this.pacman, this.teleport1, this.leftteleport, null, this);
+	    this.physics.arcade.overlap(this.pacman, this.teleport2, this.rightteleport, null, this);
 		
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
