@@ -320,7 +320,7 @@
 	    
         update: function () {
 		
-	   if (this.physics.arcade.collide(this.pacman, this.enemy)) {
+	   if (this.physics.arcade.collide(this.pacman, this.enemy))||(this.physics.arcade.collide(this.pacman, this.enemy2))  {
 		   if (lives > 1) {
 			lives--;
 			livesText.text = "lives: " + lives; 
